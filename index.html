@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0a1628">
+    
+    <!-- SEO Meta Tags -->
+    <title>Aerauliqa - Indoor Air Quality Monitor</title>
+    <meta name="description" content="Monitor your indoor air quality in real-time. Track Temperature, Humidity, VOC, and CO₂ levels with the Aerauliqa IAQ app.">
+    <meta name="keywords" content="air quality, IAQ, temperature, humidity, VOC, CO2, indoor air, monitoring, Aerauliqa">
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="Aerauliqa - Indoor Air Quality Monitor">
+    <meta property="og:description" content="Monitor your indoor air quality in real-time with precise sensor readings.">
+    <meta property="og:type" content="website">
+    
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="images/icon-192.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-container">
+                <img src="images/AerauliqaApp_whitelogo.png" alt="Aerauliqa" class="logo">
+            </div>
+            <div class="connection-status" id="connectionStatus">
+                <span class="status-indicator connected"></span>
+                <span class="status-text">Connected</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Air Quality Status Card -->
+            <section class="air-quality-card" id="airQualityCard">
+                <div class="quality-ring" id="qualityRing">
+                    <svg class="ring-svg" viewBox="0 0 200 200">
+                        <defs>
+                            <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#0099ff;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle class="ring-bg" cx="100" cy="100" r="90" />
+                        <circle class="ring-progress" cx="100" cy="100" r="90" />
+                    </svg>
+                    <div class="quality-content">
+                        <span class="quality-label">Air Quality</span>
+                        <span class="quality-status" id="qualityStatus">Excellent</span>
+                        <span class="quality-score" id="qualityScore">92</span>
+                    </div>
+                </div>
+                <p class="quality-description" id="qualityDescription">
+                    Your indoor air quality is excellent. The air is fresh and clean.
+                </p>
+            </section>
+
+            <!-- Sensor Readings Grid -->
+            <section class="sensor-grid">
+                <!-- Temperature -->
+                <div class="sensor-card" id="tempCard">
+                    <div class="sensor-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>
+                        </svg>
+                    </div>
+                    <div class="sensor-info">
+                        <span class="sensor-label">Temperature</span>
+                        <span class="sensor-value" id="tempValue">23.5</span>
+                        <span class="sensor-unit">°C</span>
+                    </div>
+                    <div class="sensor-range">
+                        <div class="range-bar">
+                            <div class="range-fill" id="tempFill" style="width: 65%"></div>
+                        </div>
+                        <div class="range-labels">
+                            <span>15°</span>
+                            <span>30°</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Humidity -->
+                <div class="sensor-card" id="humidityCard">
+                    <div class="sensor-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                        </svg>
+                    </div>
+                    <div class="sensor-info">
+                        <span class="sensor-label">Humidity</span>
+                        <span class="sensor-value" id="humidityValue">45</span>
+                        <span class="sensor-unit">%</span>
+                    </div>
+                    <div class="sensor-range">
+                        <div class="range-bar">
+                            <div class="range-fill" id="humidityFill" style="width: 45%"></div>
+                        </div>
+                        <div class="range-labels">
+                            <span>0%</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VOC -->
+                <div class="sensor-card" id="vocCard">
+                    <div class="sensor-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <div class="sensor-info">
+                        <span class="sensor-label">VOC</span>
+                        <span class="sensor-value" id="vocValue">125</span>
+                        <span class="sensor-unit">ppb</span>
+                    </div>
+                    <div class="sensor-range">
+                        <div class="range-bar">
+                            <div class="range-fill voc-fill" id="vocFill" style="width: 25%"></div>
+                        </div>
+                        <div class="range-labels">
+                            <span>0</span>
+                            <span>500</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CO2 -->
+                <div class="sensor-card" id="co2Card">
+                    <div class="sensor-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <text x="12" y="16" text-anchor="middle" font-size="8" fill="currentColor" stroke="none">CO₂</text>
+                        </svg>
+                    </div>
+                    <div class="sensor-info">
+                        <span class="sensor-label">CO₂</span>
+                        <span class="sensor-value" id="co2Value">420</span>
+                        <span class="sensor-unit">ppm</span>
+                    </div>
+                    <div class="sensor-range">
+                        <div class="range-bar">
+                            <div class="range-fill co2-fill" id="co2Fill" style="width: 21%"></div>
+                        </div>
+                        <div class="range-labels">
+                            <span>400</span>
+                            <span>2000</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Air Quality Legend -->
+            <section class="quality-legend">
+                <h3 class="legend-title">Air Quality Levels</h3>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <span class="legend-indicator excellent"></span>
+                        <span class="legend-label">Excellent</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-indicator normal"></span>
+                        <span class="legend-label">Normal</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-indicator poor"></span>
+                        <span class="legend-label">Poor</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-indicator very-poor"></span>
+                        <span class="legend-label">Very Poor</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p class="last-update">Last updated: <span id="lastUpdate">Just now</span></p>
+            <p class="copyright">© 2026 Aerauliqa</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
